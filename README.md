@@ -107,18 +107,21 @@ office2Server ---> office2Router
 
 В ходе настройки виртуалок нам потребуется включить опцию роутинга пакетов на inetRouter  и centralRouter в /etc/sysctl.conf:
 
-``` echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+``` 
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 ```
 
 Также много раз придется добавлять маршруты и прописывать сети в iptables. Например:
 
-``` iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
-    ip route add 192.168.0.0/16 via 192.168.255.2
+``` 
+iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
+ip route add 192.168.0.0/16 via 192.168.255.2
 ```  
 Или удалять, добавлять дефолтные маршруты.
 
-``` echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-    echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+``` 
+echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
 ```
 Чтобы было проще проверять доступность, добавим на этапе конфигурации вм в etc/hosts все нужные записи и сервера будут резолвиться.
 
